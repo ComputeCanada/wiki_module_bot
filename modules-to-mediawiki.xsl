@@ -6,7 +6,12 @@
 
 <xsl:output method="text" />
 <xsl:template match="/">
-	<xsl:text>Notes that some prerequisites are loaded by default. - Notez que certains prérequis sont chargés par défaut.
+	<xsl:text>Notes that some prerequisites are loaded by default. See [Using modules] for
+		details on how to use the module system.
+
+    	<xsl:call-template name="output-line-break" />
+	Notez que certains prérequis sont chargés par défaut. Visitez la page [Utiliser des modules]
+	pour avoir des détails sur l'utilisation du système de modules. 
 	</xsl:text>
   <xsl:text>{| class="wikitable" style="width:80%"&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Module&#x0D;&#x0A;</xsl:text>
