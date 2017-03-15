@@ -47,7 +47,7 @@ def fullstrip(str):
 # --------------------------------------------------------------------------------------------------------
 
 class Module:
-    def __init__(self, _name, _help, _show = None, _prereq = None):
+    def __init__(self, _name, _help, _show = None, _prereq = None, _prereq_list = None):
         self.name = _name
         self.help = fullstrip('\n'.join(re.sub('\n\n','\n',re.sub('\r\n','\n',_help)).strip('\n').split('\n')[0:]))
         if not self.help:
@@ -56,7 +56,11 @@ class Module:
             self.show = fullstrip(_show)
         else:
             self.show = None
-        self.prereq = _prereq
+        self.prereq_list = sorted(_prereq_list)
+        if not _prereq and _prereq_list:
+            self.prereq = string.join(self.prereq_list," or ")
+        else:
+            self.prereq = _prereq
         self.Parse()
 
     def Key(self,_key):

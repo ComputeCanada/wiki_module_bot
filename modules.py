@@ -97,12 +97,12 @@ def LmodModuleList(paths):
                     help = module_data["Description"]
                 if module_data.has_key("parentAA"):
                     prereq = string.join(module_data["parentAA"][0]," and ")
-                newModule = Module(name,help,"-",prereq)
+                newModule = Module(name,help,"-",_prereq_list=[prereq])
                 if newModule.version[0] != ".":
                     found = False
                     for n,m in enumerate(moduleList):
                         if m.name == newModule.name:
-                            newModule = Module(name,help,"-",m.prereq + " or " + prereq)
+                            newModule = Module(name,help,"-",_prereq_list=(m.prereq_list + [prereq]))
                             moduleList[n] = newModule
                             found = True
                             break
