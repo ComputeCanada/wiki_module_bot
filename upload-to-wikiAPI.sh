@@ -2,6 +2,7 @@
 
 timestamp=`date +%Y-%m-%d`
 echo "Updating the list of modules on $timestamp "
+source $HOME/.bashrc
 
 function print_usage {
 	echo "Usage: $0 --user <user> --password <password> [--pagetitle <page title>] --apiurl <apiurl> [--rootdir <directory where the scripts are>]"
