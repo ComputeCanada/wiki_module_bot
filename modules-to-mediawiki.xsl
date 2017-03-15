@@ -5,8 +5,9 @@
 >
 
 <xsl:output method="text" />
-
 <xsl:template match="/">
+	<xsl:text>Notes that some prerequisites are loaded by default. - Notez que certains prérequis sont chargés par défaut.
+	</xsl:text>
   <xsl:text>{| class="wikitable" style="width:80%"&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Module&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Name&#x0D;&#x0A;</xsl:text>
@@ -41,24 +42,23 @@
   <xsl:text>| </xsl:text>
   <xsl:value-of select="normalize-space(./help)" />
 
-  <xsl:call-template name="output-line-break" />
-  <xsl:text>'''Prerequisites :''' </xsl:text>
-  <xsl:value-of select="normalize-space(./prereq)" />
-
-  <!--
-  <xsl:call-template name="output-line-break" />
-  <xsl:text>'''Conflicts :''' </xsl:text>
-  <xsl:value-of select="normalize-space(./conflict)" />
-  -->
-
-  <!--  <xsl:call-template name="output-line-break" />
-  <xsl:text>'''Load :''' </xsl:text>
-  <xsl:value-of select="normalize-space(./autoload)" />
-  -->
-
-  <xsl:call-template name="output-line-break" />
-  <xsl:text>'''Description:''' </xsl:text>
   <xsl:text>&lt;div class="mw-collapsible mw-collapsed" style="white-space: pre-line;"&gt;</xsl:text>
+    <xsl:call-template name="output-line-break" />
+    <xsl:text>'''Prerequisites:''' </xsl:text>
+    <xsl:value-of select="normalize-space(./prereq)" />
+
+    <!--
+    <xsl:call-template name="output-line-break" />
+    <xsl:text>'''Conflicts :''' </xsl:text>
+    <xsl:value-of select="normalize-space(./conflict)" />
+    -->
+
+    <!--  <xsl:call-template name="output-line-break" />
+    <xsl:text>'''Load :''' </xsl:text>
+    <xsl:value-of select="normalize-space(./autoload)" />
+    -->
+    <xsl:call-template name="output-line-break" />
+    <xsl:text>'''Description:''' </xsl:text>
     <xsl:value-of select="normalize-space(./whatis)" />
   <xsl:text>&lt;/div&gt;</xsl:text>
   <xsl:text>&#x0D;&#x0A;</xsl:text>
