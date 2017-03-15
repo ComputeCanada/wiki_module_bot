@@ -1,0 +1,6 @@
+*.pyc
+*.txt
+*.xml
+*.json
+log
+wikicj
