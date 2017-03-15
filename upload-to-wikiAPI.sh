@@ -19,6 +19,7 @@ USERNAME=""
 USERPASS=""
 WIKIAPI="https://docs-dev.computecanada.ca/mediawiki/api.php"
 ROOT_DIR="/home/wiki_module_bot/modules_scripts"
+JQ="/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/bin/jq"
 
 while true; do
 	case "$1" in
@@ -68,11 +69,11 @@ CR=$(curl -S \
 	--compressed \
 	--request "GET" "${WIKIAPI}?action=query&meta=tokens&type=login&format=json")
 
-echo "$CR" | jq .
+echo "$CR" | $JQ .
 	
 rm login.json
 echo "$CR" > login.json
-TOKEN=$(jq --raw-output '.query.tokens.logintoken' login.json)
+TOKEN=$($JQ --raw-output '.query.tokens.logintoken' login.json)
 TOKEN="${TOKEN//\"/}" 
 
 #Remove carriage return!
@@ -107,9 +108,9 @@ CR=$(curl -S \
 	--data-urlencode "loginreturnurl=http://en.wikipedia.org" \
 	--request "POST" "${WIKIAPI}?action=clientlogin&format=json")
 
-echo "$CR" | jq .
+echo "$CR" | $JQ .
 
-STATUS=$(echo $CR | jq '.clientlogin.status')
+STATUS=$(echo $CR | $JQ '.clientlogin.status')
 if [[ $STATUS == *"PASS"* ]]; then
 	echo "Successfully logged in as $USERNAME, STATUS is $STATUS."
 	echo "-----"
@@ -132,9 +133,9 @@ CR=$(curl -S \
 	--compressed \
 	--request "POST" "${WIKIAPI}?action=query&meta=tokens&format=json")
 
-echo "$CR" | jq .
+echo "$CR" | $JQ .
 echo "$CR" > edittoken.json
-EDITTOKEN=$(jq --raw-output '.query.tokens.csrftoken' edittoken.json)
+EDITTOKEN=$($JQ --raw-output '.query.tokens.csrftoken' edittoken.json)
 rm edittoken.json
 
 EDITTOKEN="${EDITTOKEN//\"/}" #replace double quote by nothing
@@ -166,4 +167,4 @@ CR=$(curl -S \
 	--data-urlencode "token=${EDITTOKEN}" \
 	--request "POST" "${WIKIAPI}?action=edit&format=json")
 	
-echo "$CR" | jq .
+echo "$CR" | $JQ .
