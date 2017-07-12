@@ -6,10 +6,10 @@
 
 <xsl:output method="text" />
 <xsl:template match="/">
-  <xsl:text>{| class="wikitable" style="width:80%"&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! align="center" | Module&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! align="center" | Name&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! align="center" | Version&#x0D;&#x0A;</xsl:text>
+  <xsl:text>{| class="wikitable" style="width:85%"&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 25%" align="center" | Module&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 15%" align="center" | Version&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Description&#x0D;&#x0A;</xsl:text>
   <xsl:apply-templates select="root/module" />
   <xsl:text>|}</xsl:text>
@@ -38,9 +38,9 @@
 
   <!-- Output Description column -->
   <xsl:text>| </xsl:text>
-  <xsl:value-of select="normalize-space(./help)" />
-
   <xsl:text>&lt;div class="mw-collapsible mw-collapsed" style="white-space: pre-line;"&gt;</xsl:text>
+    <xsl:call-template name="output-line-break" />
+    <xsl:value-of select="normalize-space(./help)" />
     <xsl:call-template name="output-line-break" />
     <xsl:text>'''Prerequisites:''' </xsl:text>
     <xsl:value-of select="normalize-space(./prereq)" />

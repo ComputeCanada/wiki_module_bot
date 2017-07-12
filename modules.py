@@ -102,7 +102,10 @@ def LmodModuleList(paths):
                     found = False
                     for n,m in enumerate(moduleList):
                         if m.name == newModule.name:
-                            newModule = Module(name,help,"-",_prereq_list=(m.prereq_list + [prereq]))
+                            if len(m.help) > len(newModule.help):
+                                newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]))
+                            else:
+                                newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]))
                             moduleList[n] = newModule
                             found = True
                             break
