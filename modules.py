@@ -97,15 +97,17 @@ def LmodModuleList(paths):
                     help = module_data["Description"]
                 if module_data.has_key("parentAA"):
                     prereq = string.join(module_data["parentAA"][0]," and ")
-                newModule = Module(name,help,"-",_prereq_list=[prereq])
+                if module_data.has_key("propT") and module_data["propT"].has_key("type_"):
+                    type = module_data["propT"]["type_"].keys()[0]
+                newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type)
                 if newModule.version[0] != ".":
                     found = False
                     for n,m in enumerate(moduleList):
                         if m.name == newModule.name:
                             if len(m.help) > len(newModule.help):
-                                newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]))
+                                newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type)
                             else:
-                                newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]))
+                                newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type)
                             moduleList[n] = newModule
                             found = True
                             break
@@ -165,6 +167,12 @@ def XmlList(list):
         mod_e.append(e)
         e = Element("show")
         e.text = escape(module.show)
+        mod_e.append(e)
+        e = Element("type")
+        if module.type:
+            e.text = escape(module.type)
+        else:
+            e.text = ""
         mod_e.append(e)
 
         root.append(mod_e)
