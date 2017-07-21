@@ -6,9 +6,10 @@
 
 <xsl:output method="text" />
 <xsl:template match="/">
-  <xsl:text>{| class="wikitable" style="width:85%"&#x0D;&#x0A;</xsl:text>
+  <xsl:text>{| class="wikitable sortable" style="width:85%"&#x0D;&#x0A;</xsl:text>
   <xsl:text>! style="width: 25%" align="center" | Module&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 15%" align="center" | Type&#x0D;&#x0A;</xsl:text>
+  <!--  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text> -->
   <xsl:text>! style="width: 15%" align="center" | Version&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Description&#x0D;&#x0A;</xsl:text>
   <xsl:apply-templates select="root/module" />
@@ -19,18 +20,27 @@
   <xsl:text>|-&#x0D;&#x0A;</xsl:text>
 
   <!-- Output Module column -->
-  <xsl:text>| align="center" | </xsl:text>
+  <xsl:text>| align="center" | [</xsl:text>
+  <xsl:value-of select="normalize-space(./site)" />
+  <xsl:text> </xsl:text>
   <xsl:value-of select="normalize-space(./module_name)" />
+  <xsl:text>]</xsl:text>
+  <xsl:text>&#x0D;&#x0A;</xsl:text>
+  
+  <!-- Output type column -->
+  <xsl:text>| align="center" | </xsl:text>
+  <xsl:value-of select="normalize-space(./type)" />
   <xsl:text>&#x0D;&#x0A;</xsl:text>
 
+
   <!-- Output Nom column -->
-  <xsl:text>| align="center" | [</xsl:text>
+  <!-- <xsl:text>| align="center" | [</xsl:text>
   <xsl:value-of select="normalize-space(./site)" />
   <xsl:text> </xsl:text>
   <xsl:value-of select="normalize-space(./app_name)" />
   <xsl:text>]</xsl:text>
-  <xsl:text>&#x0D;&#x0A;</xsl:text>
-
+  <xsl:text>&#x0D;&#x0A;</xsl:text> -->
+  
   <!-- Output Version column -->
   <xsl:text>| align="center" | </xsl:text>
   <xsl:value-of select="normalize-space(./version)" />
