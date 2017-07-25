@@ -94,8 +94,8 @@ def LmodModuleList(paths):
                 help = "-"
                 prereq = "-"
                 type = "-"
-                if module_data.has_key("Description"):
-                    help = module_data["Description"]
+                if module_data.has_key("whatis"):
+                    help = "\n".join(module_data["whatis"])
                 if module_data.has_key("parentAA"):
                     prereq = string.join(module_data["parentAA"][0]," and ")
                 if module_data.has_key("propT") and module_data["propT"].has_key("type_"):
@@ -172,6 +172,12 @@ def XmlList(list):
         e = Element("type")
         if module.type:
             e.text = escape(module.type)
+        else:
+            e.text = ""
+        mod_e.append(e)
+        e = Element("wikipage")
+        if module.wikipage:
+            e.text = escape(module.wikipage)
         else:
             e.text = ""
         mod_e.append(e)

@@ -97,8 +97,18 @@ class Module:
             self.site = re.findall('https*://[^ \t\n\r]*',self.help)
 
 
+        if self.help:
+            self.wikipage = re.findall('CC-Wiki: [^ \t\n\r]*',self.help)
+            if isinstance(self.wikipage,list):
+                if len(self.wikipage) >= 1:
+                    self.wikipage = self.wikipage[0]
+                else:
+                    self.wikipage = None
+            if self.wikipage:
+                self.wikipage = self.wikipage.split(" ")[1]
+
         self.dict['module-whatis'] = fullstrip('\n'.join(self.dict['module-whatis']))
-        if not self.dict['module-whatis']:
+        if False and not self.dict['module-whatis']:
             tmp = re.split("\. ",self.help,1)
             if len(tmp) == 2:
                 self.help = tmp[0].strip(" -")
