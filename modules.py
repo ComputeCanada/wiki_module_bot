@@ -93,6 +93,7 @@ def LmodModuleList(paths):
                     name = module_data["fullName"]
                 help = "-"
                 prereq = "-"
+                type = "-"
                 if module_data.has_key("Description"):
                     help = module_data["Description"]
                 if module_data.has_key("parentAA"):
