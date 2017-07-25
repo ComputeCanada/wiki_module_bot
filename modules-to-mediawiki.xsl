@@ -9,7 +9,7 @@
   <xsl:text>{| class="wikitable sortable" style="width:85%"&#x0D;&#x0A;</xsl:text>
   <xsl:text>! style="width: 25%" align="center" | Module&#x0D;&#x0A;</xsl:text>
   <xsl:text>! style="width: 15%" align="center" | Type&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! style="width: 15%" align="center" | Wiki page&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 15%" align="center" | Documentation&#x0D;&#x0A;</xsl:text>
   <!--  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text> -->
   <!--  <xsl:text>! style="width: 15%" align="center" | Version&#x0D;&#x0A;</xsl:text> -->
   <xsl:text>! align="center" | Description&#x0D;&#x0A;</xsl:text>
@@ -34,12 +34,13 @@
   <xsl:text>&#x0D;&#x0A;</xsl:text>
   
   <!-- Output wiki page column -->
-  <xsl:text>| align="center" | [[</xsl:text>
+  <xsl:text>| align="center" | </xsl:text>
+  <xsl:if test="string-length(normalize-space(./wikipage))>0">
+  <xsl:text>[[</xsl:text>
   <xsl:value-of select="normalize-space(./wikipage)" />
-  <xsl:text>|wiki</xsl:text>
   <xsl:text>]]</xsl:text>
+  </xsl:if>
   <xsl:text>&#x0D;&#x0A;</xsl:text>
-  
 
 
   <!-- Output Nom column -->
