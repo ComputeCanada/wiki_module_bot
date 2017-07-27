@@ -98,14 +98,14 @@ class Module:
 
 
         if self.help:
-            self.wikipage = re.findall('CC-Wiki: [^ \t\n\r]*',self.help)
+            self.wikipage = re.findall('CC-Wiki: [^\t\n\r-]*',self.help)
             if isinstance(self.wikipage,list):
                 if len(self.wikipage) >= 1:
                     self.wikipage = self.wikipage[0]
                 else:
                     self.wikipage = None
             if self.wikipage:
-                self.wikipage = self.wikipage.split(" ")[1]
+                self.wikipage = " ".join(self.wikipage.split(" ")[1:])
 
         self.dict['module-whatis'] = fullstrip('\n'.join(self.dict['module-whatis']))
         if False and not self.dict['module-whatis']:
