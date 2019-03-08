@@ -5,14 +5,15 @@ echo "Updating the list of modules on $timestamp "
 source $HOME/.bashrc
 
 function print_usage {
-	echo "Usage: $0 --user <user> --password <password> [--pagetitle <page title>] --apiurl <apiurl> [--rootdir <directory where the scripts are>]"
+	echo "Usage: $0 --user <user> --password <password> [--pagetitle <page title>] --apiurl <apiurl> [--rootdir <directory where the scripts are>] --architecture <architecture>"
 	echo "  user should be the user to use on the wiki"
 	echo "  password should be the password to use for that user"
 	echo "  pagetitle is the page title (default: Modules)"
 	echo "  apiurl is the api url to use (typically https://<hostname>/mediawiki/api.php"
+	echo "  architecture is one of sse3, avx, avx2, avx512"
 }
 
-TEMP=$(getopt -o u:p:t:a: --longoptions user:,password:,pagetitle:,apiurl:,rootdir: -n $0 -- "$@")
+TEMP=$(getopt -o u:p:t:a: --longoptions user:,password:,pagetitle:,apiurl:,rootdir:,architecture: -n $0 -- "$@")
 eval set -- "$TEMP"
 
 PAGE="Modules"
@@ -21,6 +22,7 @@ USERPASS=""
 WIKIAPI="https://docs-dev.computecanada.ca/mediawiki/api.php"
 ROOT_DIR="/home/wiki_module_bot/modules_scripts"
 JQ="/cvmfs/soft.computecanada.ca/nix/var/nix/profiles/16.09/bin/jq"
+ARCHITECTURE="avx2"
 
 while true; do
 	case "$1" in
@@ -34,6 +36,8 @@ while true; do
 			WIKIAPI=$2; shift 2;;
 		--rootdir)
 			ROOT_DIR=$2; shift 2;;
+		--architecture)
+			ARCHITECTURE=$2; shift 2;;
 		--) shift; break ;;
 		*) echo "Unknown parameter $1"; print_usage; exit 1 ;;
 	esac
@@ -42,15 +46,15 @@ done
 if [[ "$USERNAME" == "" || "$USERPASS" == "" ]]; then print_usage; exit 1; fi
 
 #The very first is to produce a list of software in xml format, then convert it into txt type.
-XMLFILE="$ROOT_DIR/cvmfs_modules.xml"
-WIKITXTFILE="$ROOT_DIR/cvmfs_modules.txt"
+XMLFILE="$ROOT_DIR/cvmfs_modules_$ARCHITECTURE.xml"
+WIKITXTFILE="$ROOT_DIR/cvmfs_modules_$ARCHITECTURE.txt"
 COOKIE_JAR="$ROOT_DIR/wikicj"
 MODULES_PY="$ROOT_DIR/modules.py"
 MODULES_CFG="$ROOT_DIR/cvmfs-client-dev.cfg"
 MODULES_TO_WIKI_XLS="$ROOT_DIR/modules-to-mediawiki.xsl"
 
 #Will store file in wikifile
-python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE
+RSNT_ARCH=$ARCHITECTURE python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE
 xsltproc "$MODULES_TO_WIKI_XLS" "$XMLFILE" > "$WIKITXTFILE.new"
 
 lines_changed=$(diff $WIKITXTFILE $WIKITXTFILE.new | wc -l)
