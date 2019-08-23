@@ -51,10 +51,11 @@ WIKITXTFILE="$ROOT_DIR/cvmfs_modules_$ARCHITECTURE.txt"
 COOKIE_JAR="$ROOT_DIR/wikicj"
 MODULES_PY="$ROOT_DIR/modules.py"
 MODULES_CFG="$ROOT_DIR/cvmfs-client-dev.cfg"
+MODULE_WIKI_PAGE="$ROOT_DIR/module_wiki_page.json"
 MODULES_TO_WIKI_XLS="$ROOT_DIR/modules-to-mediawiki.xsl"
 
 #Will store file in wikifile
-RSNT_ARCH=$ARCHITECTURE python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE
+RSNT_ARCH=$ARCHITECTURE python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE -w $MODULE_WIKI_PAGE
 xsltproc "$MODULES_TO_WIKI_XLS" "$XMLFILE" > "$WIKITXTFILE.new"
 
 lines_changed=$(diff $WIKITXTFILE $WIKITXTFILE.new | wc -l)

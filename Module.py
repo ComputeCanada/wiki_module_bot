@@ -47,8 +47,9 @@ def fullstrip(str):
 # --------------------------------------------------------------------------------------------------------
 
 class Module:
-    def __init__(self, _name, _help, _show = None, _prereq = None, _prereq_list = None, _type = None):
+    def __init__(self, _name, _help, _show = None, _prereq = None, _prereq_list = None, _type = None, wiki_url_list = None):
         self.name = _name
+        self.wiki_url_list = wiki_url_list
         self.help = fullstrip('\n'.join(re.sub('\n\n','\n',re.sub('\r\n','\n',_help)).strip('\n').split('\n')[0:]))
         if not self.help:
             self.help = '-'
@@ -106,6 +107,10 @@ class Module:
                     self.wikipage = None
             if self.wikipage:
                 self.wikipage = " ".join(self.wikipage.split(" ")[1:])
+
+        if not self.wikipage and isinstance(self.wiki_url_list,dict):
+            name = self.name.split('/')[0]
+            self.wikipage = self.wiki_url_list.get(name,None)
 
         self.dict['module-whatis'] = fullstrip('\n'.join(self.dict['module-whatis']))
         if False and not self.dict['module-whatis']:

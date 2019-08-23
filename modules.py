@@ -2,6 +2,7 @@
 
 import os
 import sys
+import json
 from xml.etree.ElementTree import ElementTree, Element, SubElement
 from xml.sax.saxutils import escape
 
@@ -34,6 +35,13 @@ if "-c" in sys.argv:
         print >> sys.stderr, "must specify a filename with -c option"
         sys.exit(1)
 
+if "-w" in sys.argv:
+    try:
+        WIKI_PAGE_LIST = sys.argv[sys.argv.index("-w")+1]
+    except IndexError:
+        print >> sys.stderr, "must specify a filename with -w option"
+        sys.exit(1)
+
 if "-h" in sys.argv or "--h" in sys.argv or "--help" in sys.argv:
     print >> sys.stderr, "Usage : python modules.py [-o <output_file.xml>] [-c <config_file>]"
     sys.exit(1)
@@ -64,10 +72,15 @@ def ModuleList(paths):
     return moduleList
 
 def LmodModuleList(paths):
+#    try:
+    with open(WIKI_PAGE_LIST, "r") as f:
+        wiki_url_list = json.loads(f.read())
+#    except:
+#        print("Error loading the file %s." % WIKI_PAGE_LIST)
+#        wiki_url_list = None
     import string
     moduleList = []
     output = pexpect.run(MODULE_COMMAND + ' ' + string.join(paths,':'))
-    import json
     output_js = json.loads(output)
     if "jsonSoftwarePage" in MODULE_COMMAND:
         for elem in output_js:
@@ -100,7 +113,7 @@ def LmodModuleList(paths):
                     prereq = string.join(module_data["parentAA"][0]," and ")
                 if module_data.has_key("propT") and module_data["propT"].has_key("type_"):
                     type = module_data["propT"]["type_"].keys()[0]
-                newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type)
+                newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,wiki_url_list=wiki_url_list)
                 if newModule.version[0] != ".":
                     found = False
                     for n,m in enumerate(moduleList):
