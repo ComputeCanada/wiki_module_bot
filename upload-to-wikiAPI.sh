@@ -57,7 +57,7 @@ MODULES_TO_WIKI_XLS="$ROOT_DIR/modules-to-mediawiki.xsl"
 #Will store file in wikifile
 RSNT_ARCH=$ARCHITECTURE python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE -w $MODULE_WIKI_PAGE
 xsltproc "$MODULES_TO_WIKI_XLS" "$XMLFILE" > "$WIKITXTFILE.new"
-echo "{{NOINDEX}}" >> "$WIKITXTFILE.new"
+echo "<noinclude>{{NOINDEX}}</noinclude>" >> "$WIKITXTFILE.new"
 
 lines_changed=$(diff $WIKITXTFILE $WIKITXTFILE.new | wc -l)
 if [[ $lines_changed -ne 0 ]]; then
