@@ -11,7 +11,7 @@
   <xsl:text>! style="width: 15%" align="center" | Type&#x0D;&#x0A;</xsl:text>
   <xsl:text>! style="width: 15%" align="center" | Documentation&#x0D;&#x0A;</xsl:text>
   <!--  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text> -->
-  <!--  <xsl:text>! style="width: 15%" align="center" | Version&#x0D;&#x0A;</xsl:text> -->
+  <xsl:text>! style="width: 15%" align="center" | Versions&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Description&#x0D;&#x0A;</xsl:text>
   <xsl:apply-templates select="root/module" />
   <xsl:text>|}</xsl:text>
@@ -52,10 +52,9 @@
   <xsl:text>&#x0D;&#x0A;</xsl:text> -->
   
   <!-- Output Version column -->
-  <!--
   <xsl:text>| align="center" | </xsl:text>
   <xsl:value-of select="normalize-space(./version)" />
-  <xsl:text>&#x0D;&#x0A;</xsl:text> -->
+  <xsl:text>&#x0D;&#x0A;</xsl:text> 
 
   <!-- Output Description column -->
   <xsl:text>| </xsl:text>
@@ -63,8 +62,9 @@
     <xsl:call-template name="output-line-break" />
     <xsl:value-of select="normalize-space(./help)" />
     <xsl:call-template name="output-line-break" />
-    <xsl:text>'''Prerequisites:''' </xsl:text>
+    <!--    <xsl:text>'''Prerequisites:''' </xsl:text>
     <xsl:value-of select="normalize-space(./prereq)" />
+    -->
 
     <!--
     <xsl:call-template name="output-line-break" />
@@ -77,8 +77,9 @@
     <xsl:value-of select="normalize-space(./autoload)" />
     -->
     <xsl:call-template name="output-line-break" />
-    <xsl:text>'''Description:''' </xsl:text>
+    <!--    <xsl:text>'''Description:''' </xsl:text>
     <xsl:value-of select="normalize-space(./whatis)" />
+    -->
   <xsl:text>&lt;/div&gt;</xsl:text>
   <xsl:text>&#x0D;&#x0A;</xsl:text>
 </xsl:template>

@@ -97,9 +97,11 @@ def LmodModuleList(paths):
                     moduleList.append(newModule)
     elif "spider-json" in MODULE_COMMAND:
 #        print(str(output_js))
+        cnt=0
         for module_name in output_js:
             data = output_js[module_name]
             for path in data:
+#                print("    ",path)
                 module_data = data[path]
 #                print(str(module_data))
                 if module_data.has_key("fullName"):
@@ -114,14 +116,22 @@ def LmodModuleList(paths):
                 if module_data.has_key("propT") and module_data["propT"].has_key("type_"):
                     type = module_data["propT"]["type_"].keys()[0]
                 newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,wiki_url_list=wiki_url_list)
+                newModule.name = module_name
                 if newModule.version[0] != ".":
                     found = False
+                    new_version = ""
                     for n,m in enumerate(moduleList):
                         if m.name == newModule.name:
+                            if newModule.version not in m.version:
+                                new_version =  m.version + ", " + newModule.version
+                            else:
+                                new_version = m.version
                             if len(m.help) > len(newModule.help):
                                 newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type)
                             else:
                                 newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type)
+                            newModule.version = new_version
+                            newModule.name = module_name
                             moduleList[n] = newModule
                             found = True
                             break
