@@ -57,7 +57,7 @@ echo $PAGENAME
 #avail_wheels --all_versions --arch generic avx2 --python "$VERSION" --condense --mediawiki --column name version  > "$WIKITXTFILE.new"
 #/cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/bin/python3 -W ignore /cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/avail_wheels.py --all-versions --all-arch --python "$VERSION" --mediawiki --column name version --condense > "$WIKITXTFILE.new"
 PIP_CONFIG_FILE=""
-/cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/bin/python3 /cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/avail_wheels.py --all-versions --all-arch --python $VERSION --mediawiki --column name version > "$WIKITXTFILE.new"
+/cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/bin/python3 /cvmfs/soft.computecanada.ca/custom/python/envs/avail_wheels/avail_wheels.py --all-versions --all-arch --python $VERSION --mediawiki --column name version --condense > "$WIKITXTFILE.new"
 
 
 #Compare the old wikifile with the new one to see whether any new wheels has been installed
