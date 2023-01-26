@@ -1,9 +1,9 @@
 {
     "abaqus": "Abaqus",
     "abinit": "ABINIT",
-    "ansys": "ANSYS",
-    "fluent": "ANSYS",
-    "cfx": "ANSYS",
+    "ansys": "Ansys",
+    "fluent": "Ansys",
+    "cfx": "Ansys",
     "spark": "Apache Spark",
     "cuda": "CUDA",
     "cpmd": "CPMD",
