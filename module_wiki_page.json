@@ -8,6 +8,8 @@
     "cuda": "CUDA",
     "cpmd": "CPMD",
     "delft3d": "Delft3D",
+    "fasttree": "FastTree",
+    "fasttree-double": "FastTree",
     "gamess-us": "GAMESS-US",
     "gaussian": "Gaussian",
     "gromacs": "GROMACS",
