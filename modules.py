@@ -10,7 +10,7 @@ from xml.sax.saxutils import escape
 import re
 import pexpect
 from Module import Module
-import ConfigParser
+import configparser
 
 # --------------------------------------------------------------------------------------------------------
 # AUTHORSHIP
@@ -24,7 +24,7 @@ if "-o" in sys.argv:
     try:
         OUTPUT_FILE = sys.argv[sys.argv.index("-o")+1]
     except IndexError:
-        print >> sys.stderr, "must specify a filename with -o option"
+        print("must specify a filename with -o option", file=sys.stderr)
         sys.exit(1)
 
 CONFIG_FILE = 'module.cfg'
@@ -32,18 +32,18 @@ if "-c" in sys.argv:
     try:
         CONFIG_FILE = sys.argv[sys.argv.index("-c")+1]
     except IndexError:
-        print >> sys.stderr, "must specify a filename with -c option"
+        print("must specify a filename with -c option", file=sys.stderr)
         sys.exit(1)
 
 if "-w" in sys.argv:
     try:
         WIKI_PAGE_LIST = sys.argv[sys.argv.index("-w")+1]
     except IndexError:
-        print >> sys.stderr, "must specify a filename with -w option"
+        print("must specify a filename with -w option", file=sys.stderr)
         sys.exit(1)
 
 if "-h" in sys.argv or "--h" in sys.argv or "--help" in sys.argv:
-    print >> sys.stderr, "Usage : python modules.py [-o <output_file.xml>] [-c <config_file>]"
+    print("Usage : python modules.py [-o <output_file.xml>] [-c <config_file>]", file=sys.stderr)
     sys.exit(1)
 
 # --------------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ def LmodModuleList(paths):
 #        wiki_url_list = None
     import string
     moduleList = []
-    output = pexpect.run(MODULE_COMMAND + ' ' + string.join(paths,':'))
+    output = pexpect.run(MODULE_COMMAND + ' ' + ':'.join(paths))
     output_js = json.loads(output)
     if "jsonSoftwarePage" in MODULE_COMMAND:
         for elem in output_js:
@@ -88,10 +88,10 @@ def LmodModuleList(paths):
                 name = v["full"]
                 help = "-"
                 prereq = "-"
-                if v.has_key("help"):
+                if "help" in v:
                     help = v["help"]
-                if v.has_key("parent"):
-                    prereq = string.join(v["parent"]," or ").replace("default:","").replace("default","").replace(":"," and ")
+                if "parent" in v:
+                    prereq = " or ".join(v["parent"]).replace("default:","").replace("default","").replace(":"," and ")
                 newModule = Module(name,help,"-",prereq)
                 if newModule.version[0] != ".":
                     moduleList.append(newModule)
@@ -104,17 +104,17 @@ def LmodModuleList(paths):
 #                print("    ",path)
                 module_data = data[path]
 #                print(str(module_data))
-                if module_data.has_key("fullName"):
+                if "fullName" in module_data:
                     name = module_data["fullName"]
                 help = "-"
                 prereq = "-"
                 type = "-"
-                if module_data.has_key("whatis"):
+                if "whatis" in module_data:
                     help = "\n".join(module_data["whatis"])
-                if module_data.has_key("parentAA"):
-                    prereq = string.join(module_data["parentAA"][0]," and ")
-                if module_data.has_key("propT") and module_data["propT"].has_key("type_"):
-                    type = module_data["propT"]["type_"].keys()[0]
+                if "parentAA" in module_data:
+                    prereq = " and ".join(module_data["parentAA"][0])
+                if "propT" in module_data and "type_" in module_data["propT"]:
+                    type = list(module_data["propT"]["type_"].keys())[0]
                 newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,wiki_url_list=wiki_url_list)
                 newModule.name = module_name
                 if newModule.version[0] != ".":
@@ -166,7 +166,7 @@ def XmlList(list):
         if module.Key("prereq") is None or len(module.Key("prereq")) == 0:
                 e.text = '-'
         else:
-            if isinstance(module.Key("prereq"),basestring):
+            if isinstance(module.Key("prereq"),str):
                 e.text = module.Key("prereq")
             else:
                 e.text = escape(' '.join(module.Key("prereq")))
@@ -227,7 +227,7 @@ def Main(argv_):
 # GLOBAL NAMES
 # --------------------------------------------------------------------------------------------------------
 
-Config = ConfigParser.ConfigParser()
+Config = configparser.ConfigParser()
 Config.read(CONFIG_FILE)
 section = 'Configuration'
 MODULE_COMMAND = Config.get(section,'command')

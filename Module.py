@@ -6,7 +6,6 @@
 # --------------------------------------------------------------------------------------------------------
 
 import re
-from string import strip
 import string
 def strip_accents(str):
     str = re.sub('[éèê]','e',str)
@@ -15,7 +14,7 @@ def strip_accents(str):
     str = re.sub('&','and',str)
     str = re.sub('’','\'',str)
     str = re.sub('\|',' ',str)
-    str = filter(lambda x: x in string.printable, str)
+    str = ''.join(x for x in str if x in string.printable)
     return str
 #def strip_accents(s):
 #       return ''.join(c for c in unicodedata.normalize('NFD', unicode(s)) if unicodedata.category(c) != 'Mn')
@@ -59,7 +58,7 @@ class Module:
             self.show = None
         self.prereq_list = sorted(_prereq_list)
         if not _prereq and _prereq_list:
-            self.prereq = string.join(self.prereq_list," or ")
+            self.prereq = " or ".join(self.prereq_list)
         else:
             self.prereq = _prereq
         if _type:
@@ -69,7 +68,7 @@ class Module:
         self.Parse()
 
     def Key(self,_key):
-        if self.dict.has_key(_key):
+        if _key in self.dict:
             return self.dict[_key]
         else:
             return None
