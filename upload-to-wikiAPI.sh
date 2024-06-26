@@ -117,12 +117,10 @@ CR=$(curl -S \
 	--header "Accept-Language: en-us" \
 	--header "Connection: keep-alive" \
 	--compressed \
-	--data-urlencode "username=${USERNAME}" \
-	--data-urlencode "password=${USERPASS}" \
-	--data-urlencode "rememberMe=1" \
-	--data-urlencode "logintoken=${TOKEN}" \
-	--data-urlencode "loginreturnurl=http://en.wikipedia.org" \
-	--request "POST" "${WIKIAPI}?action=clientlogin&format=json")
+	--data-urlencode "lgname=${USERNAME}" \
+	--data-urlencode "lgpassword=${USERPASS}" \
+	--data-urlencode "lgtoken=${TOKEN}" \
+	--request "POST" "${WIKIAPI}?action=login&format=json")
 
 echo "$CR" | $JQ .
 
