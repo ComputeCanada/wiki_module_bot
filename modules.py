@@ -118,7 +118,7 @@ def LmodModuleList(paths):
                     type = module_data["propT"]["type_"].keys()[0]
                 newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,wiki_url_list=wiki_url_list)
                 newModule.name = module_name
-                if newModule.version[0] != ".":
+                if newModule.version[0] != "." and not module_data.get("hidden") and "whatis" in module_data:
                     found = False
                     new_version = ""
                     for n,m in enumerate(moduleList):
