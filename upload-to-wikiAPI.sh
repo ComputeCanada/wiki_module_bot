@@ -55,6 +55,7 @@ MODULE_WIKI_PAGE="$ROOT_DIR/module_wiki_page.json"
 MODULES_TO_WIKI_XLS="$ROOT_DIR/modules-to-mediawiki.xsl"
 
 #Will store file in wikifile
+module load scipy-stack
 RSNT_ARCH=$ARCHITECTURE python "$MODULES_PY" -c "$MODULES_CFG" -o $XMLFILE -w $MODULE_WIKI_PAGE
 xsltproc "$MODULES_TO_WIKI_XLS" "$XMLFILE" > "$WIKITXTFILE.new"
 echo "<noinclude>{{NOINDEX}}</noinclude>" >> "$WIKITXTFILE.new"
