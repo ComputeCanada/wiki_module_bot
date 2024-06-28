@@ -11,7 +11,7 @@ import re
 import pexpect
 from Module import Module
 import configparser
-from pkg_resources import parse_version
+from packaging.version import parse, InvalidVersion
 
 # --------------------------------------------------------------------------------------------------------
 # AUTHORSHIP
@@ -50,6 +50,12 @@ if "-h" in sys.argv or "--h" in sys.argv or "--help" in sys.argv:
 # --------------------------------------------------------------------------------------------------------
 # GLOBAL FUNCTIONS
 # --------------------------------------------------------------------------------------------------------
+
+def parse_wrapper(version):
+    try:
+        return parse(version)
+    except InvalidVersion:
+        return parse("0.0")
 
 def ModuleList(paths):
     moduleList = []
@@ -127,8 +133,8 @@ def LmodModuleList(paths):
                                 new_version =  m.version + " " + newModule.version
                             else:
                                 new_version = m.version
-                            max_version = max(m.version.split(), key=parse_version)
-                            if parse_version(max_version) > parse_version(newModule.version):
+                            max_version = max(m.version.split(), key=parse_wrapper)
+                            if parse_wrapper(max_version) > parse_wrapper(newModule.version):
                                 newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,wiki_url_list=wiki_url_list)
                             else:
                                 newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,wiki_url_list=wiki_url_list)
@@ -142,7 +148,7 @@ def LmodModuleList(paths):
     for n,m in enumerate(moduleList):
         version_str = m.version
         version_list = version_str.split()
-        version_sorted = sorted(version_list, key=parse_version)
+        version_sorted = sorted(version_list, key=parse_wrapper)
         m.version = ', '.join([str(elem1) for elem1 in version_sorted])
 
     return moduleList
