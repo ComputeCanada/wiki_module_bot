@@ -1,0 +1,187 @@
+{
+  "gcc": {
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v3/Core/gcc/12.3.lua": {
+      "fullName": "gcc/12.3",
+      "Version": "12.3",
+      "hidden": false,
+      "whatis": [
+        "Description: The GNU Compiler Collection.",
+        "Homepage: https://gcc.gnu.org/",
+        "Keyword:tools"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2023"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v3/Core/gcc",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: The GNU Compiler Collection.\n"
+    },
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Core/gcc/9.3.0.lua": {
+      "fullName": "gcc/9.3.0",
+      "Version": "9.3.0",
+      "hidden": false,
+      "whatis": [
+        "Description: The GNU Compiler Collection.",
+        "Homepage: https://gcc.gnu.org/",
+        "Keyword:tools"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2020"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Core/gcc",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: The GNU Compiler Collection.\n"
+    }
+  },
+  "python": {
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v4/Compiler/gcccore/python/3.11.5.lua": {
+      "fullName": "python/3.11.5",
+      "Version": "3.11.5",
+      "hidden": false,
+      "whatis": [
+        "Description: Python is a programming language.",
+        "Homepage: https://python.org/",
+        "Keyword:tools"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2023"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v4/Compiler/gcccore/python",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: Python is a programming language.\n"
+    },
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Compiler/gcccore/python/3.8.10.lua": {
+      "fullName": "python/3.8.10",
+      "Version": "3.8.10",
+      "hidden": false,
+      "whatis": [
+        "Description: Python is a programming language.",
+        "Homepage: https://python.org/",
+        "Keyword:tools"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2020"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Compiler/gcccore/python",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: Python is a programming language.\n"
+    }
+  },
+  "openmpi": {
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v4/Compiler/gcc12/openmpi/4.1.5.lua": {
+      "fullName": "openmpi/4.1.5",
+      "Version": "4.1.5",
+      "hidden": false,
+      "whatis": [
+        "Description: The Open MPI Project is an open source MPI implementation.",
+        "Homepage: https://www.open-mpi.org/",
+        "Keyword:mpi"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2023",
+          "gcc/12.3"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v4/Compiler/gcc12/openmpi",
+      "propT": {
+        "type_": {
+          "mpi": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: The Open MPI Project is an open source MPI implementation.\n"
+    },
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/MPI/gcc9/openmpi/4.0.3.lua": {
+      "fullName": "openmpi/4.0.3",
+      "Version": "4.0.3",
+      "hidden": false,
+      "whatis": [
+        "Description: The Open MPI Project is an open source MPI implementation.",
+        "Homepage: https://www.open-mpi.org/",
+        "Keyword:mpi"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2020",
+          "gcc/9.3.0"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/MPI/gcc9/openmpi",
+      "propT": {
+        "type_": {
+          "mpi": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: The Open MPI Project is an open source MPI implementation.\n"
+    }
+  },
+  "cmake": {
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Core/cmake/3.18.4.lua": {
+      "fullName": "cmake/3.18.4",
+      "Version": "3.18.4",
+      "hidden": false,
+      "whatis": [
+        "Description: CMake is a cross-platform build system.",
+        "Homepage: https://cmake.org/",
+        "Keyword:tools"
+      ],
+      "parentAA": [
+        [
+          "gentoo/2020"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2020/avx2/Core/cmake",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      },
+      "help": "\nDescription\n===========\nDescription: CMake is a cross-platform build system.\n"
+    }
+  },
+  "hiddenpkg": {
+    "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v3/Core/hiddenpkg/1.0.lua": {
+      "fullName": "hiddenpkg/1.0",
+      "Version": "1.0",
+      "hidden": true,
+      "whatis": [
+        "Description: hidden"
+      ],
+      "parentAA": [
+        [
+          "StdEnv/2023"
+        ]
+      ],
+      "mpath": "/cvmfs/soft.computecanada.ca/easybuild/modules/2023/x86-64-v3/Core",
+      "propT": {
+        "type_": {
+          "tools": 1
+        }
+      }
+    }
+  }
+}

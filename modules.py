@@ -9,7 +9,7 @@ from xml.sax.saxutils import escape
 # For parsing the modulefiles
 import re
 import pexpect
-from Module import Module
+from Module import Module, stack_for
 import configparser
 from packaging.version import parse, InvalidVersion
 
@@ -122,22 +122,23 @@ def LmodModuleList(paths):
                     prereq = " and ".join(module_data["parentAA"][0])
                 if "propT" in module_data and "type_" in module_data["propT"]:
                     type = list(module_data["propT"]["type_"].keys())[0]
-                newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,wiki_url_list=wiki_url_list)
+                stack = stack_for(module_data)
+                newModule = Module(name,help,"-",_prereq_list=[prereq],_type=type,_stack=stack,wiki_url_list=wiki_url_list)
                 newModule.name = module_name
                 if newModule.version[0] != "." and not module_data.get("hidden") and "whatis" in module_data:
                     found = False
                     new_version = ""
                     for n,m in enumerate(moduleList):
-                        if m.name == newModule.name:
+                        if m.name == newModule.name and m.stack == newModule.stack:
                             if newModule.version not in m.version:
                                 new_version =  m.version + " " + newModule.version
                             else:
                                 new_version = m.version
                             max_version = max(m.version.split(), key=parse_wrapper)
                             if parse_wrapper(max_version) > parse_wrapper(newModule.version):
-                                newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,wiki_url_list=wiki_url_list)
+                                newModule = Module(name,m.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,_stack=m.stack,wiki_url_list=wiki_url_list)
                             else:
-                                newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,wiki_url_list=wiki_url_list)
+                                newModule = Module(name,newModule.help,"-",_prereq_list=(m.prereq_list + [prereq]),_type=type,_stack=newModule.stack,wiki_url_list=wiki_url_list)
                             newModule.version = new_version
                             newModule.name = module_name
                             moduleList[n] = newModule
@@ -211,6 +212,9 @@ def XmlList(list):
         else:
             e.text = ""
         mod_e.append(e)
+        e = Element("stack")
+        e.text = escape(module.stack)
+        mod_e.append(e)
         e = Element("wikipage")
         if module.wikipage:
             e.text = escape(module.wikipage)
@@ -232,6 +236,7 @@ def Main(argv_):
     else:
         list = LmodModuleList(MODULE_PATHS)
     list = sorted(list,key=lambda mod: mod.version.lower())
+    list = sorted(list,key=lambda mod: mod.stack.lower())
     list = sorted(list,key=lambda mod: mod.app_name.lower())
     list = sorted(list,key=lambda mod: mod.name.lower())
     XmlList(list)

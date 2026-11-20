@@ -7,10 +7,11 @@
 <xsl:output method="text" />
 <xsl:template match="/">
   <xsl:text>{| class="wikitable sortable" style="width:85%"&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! style="width: 25%" align="center" | Module&#x0D;&#x0A;</xsl:text>
-  <xsl:text>! style="width: 15%" align="center" | Type&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 20%" align="center" | Module&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 12%" align="center" | StdEnv&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 10%" align="center" | Type&#x0D;&#x0A;</xsl:text>
   <!--  <xsl:text>! style="width: 20%" align="center" | Name&#x0D;&#x0A;</xsl:text> -->
-  <xsl:text>! style="width: 30%" align="center" | Versions&#x0D;&#x0A;</xsl:text>
+  <xsl:text>! style="width: 28%" align="center" | Versions&#x0D;&#x0A;</xsl:text>
   <xsl:text>! align="center" | Description&#x0D;&#x0A;</xsl:text>
   <xsl:apply-templates select="root/module" />
   <xsl:text>|}</xsl:text>
@@ -19,14 +20,29 @@
 <xsl:template match="module">
   <xsl:text>|-&#x0D;&#x0A;</xsl:text>
 
-  <!-- Output Module column -->
-  <xsl:text>| align="center" | [</xsl:text>
-  <xsl:value-of select="normalize-space(./site)" />
-  <xsl:text> </xsl:text>
-  <xsl:value-of select="normalize-space(./module_name)" />
-  <xsl:text>]</xsl:text>
-  <xsl:text>&#x0D;&#x0A;</xsl:text>
+  <!-- Output Module column, merged across rows with the same module name -->
+  <xsl:variable name="modname" select="normalize-space(./module_name)" />
+  <xsl:if test="not(preceding-sibling::module[normalize-space(module_name) = $modname])">
+    <xsl:variable name="span" select="count(following-sibling::module[normalize-space(module_name) = $modname]) + 1" />
+    <xsl:text>| align="center"</xsl:text>
+    <xsl:if test="$span &gt; 1">
+      <xsl:text> rowspan="</xsl:text>
+      <xsl:value-of select="$span" />
+      <xsl:text>"</xsl:text>
+    </xsl:if>
+    <xsl:text> | [</xsl:text>
+    <xsl:value-of select="normalize-space(./site)" />
+    <xsl:text> </xsl:text>
+    <xsl:value-of select="$modname" />
+    <xsl:text>]</xsl:text>
+    <xsl:text>&#x0D;&#x0A;</xsl:text>
+  </xsl:if>
   
+  <!-- Output StdEnv column -->
+  <xsl:text>| align="center" | </xsl:text>
+  <xsl:value-of select="normalize-space(./stack)" />
+  <xsl:text>&#x0D;&#x0A;</xsl:text>
+
   <!-- Output type column -->
   <xsl:text>| align="center" | </xsl:text>
   <xsl:value-of select="normalize-space(./type)" />
