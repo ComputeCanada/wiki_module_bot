@@ -40,13 +40,33 @@ def fullstrip(str):
     str = re.sub('\n[\t ]*','\n',str)
     return strip_accents(str)
 
+def stack_for(module_data):
+    """Return the StdEnv that provides a module, or '-' if unknown.
+
+    Lmod's spider-json records the parent module chain in parentAA.  The
+    first element of each chain is normally StdEnv/<version>; older stacks
+    may report the OS layer (gentoo/<version>) instead.
+    """
+    chains = module_data.get("parentAA") or []
+    for chain in chains:
+        for parent in chain:
+            if parent.startswith("StdEnv/"):
+                return parent
+    for chain in chains:
+        for parent in chain:
+            if parent.startswith("gentoo/"):
+                return "StdEnv/" + parent.split("/", 1)[1]
+    # nixpkgs/16.09 is shared by StdEnv/2016.4 and StdEnv/2018.3, so it
+    # cannot identify a single stack.
+    return "-"
+
 
 # --------------------------------------------------------------------------------------------------------
 # CLASSES
 # --------------------------------------------------------------------------------------------------------
 
 class Module:
-    def __init__(self, _name, _help, _show = None, _prereq = None, _prereq_list = None, _type = None, wiki_url_list = None):
+    def __init__(self, _name, _help, _show = None, _prereq = None, _prereq_list = None, _type = None, _stack = None, wiki_url_list = None):
         self.name = _name
         self.wiki_url_list = wiki_url_list
         self.help = fullstrip('\n'.join(re.sub('\n\n','\n',re.sub('\r\n','\n',_help)).strip('\n').split('\n')[0:]))
@@ -65,6 +85,7 @@ class Module:
             self.type = _type
         else:
             self.type = None
+        self.stack = _stack if _stack else "-"
         self.Parse()
 
     def Key(self,_key):
